@@ -1,18 +1,8 @@
-use std::{
-    fs::File,
-    io::{self, BufRead, BufReader},
-    path::Path,
-};
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
-}
-
-fn extract_two_digit_seq_from_lines(lines: io::Lines<BufReader<File>>, seq: &mut Vec<String>) {
+#[cfg(test)]
+fn extract_two_digit_seq_from_lines(
+    lines: std::io::Lines<std::io::BufReader<std::fs::File>>,
+    seq: &mut Vec<String>,
+) {
     for line in lines {
         let mut digits = vec![];
         if let Ok(ip) = line {
@@ -30,6 +20,7 @@ fn extract_two_digit_seq_from_lines(lines: io::Lines<BufReader<File>>, seq: &mut
     }
 }
 
+#[cfg(test)]
 fn calculate_sum_of_seq(seq: Vec<String>) -> u32 {
     let mut total = 0;
     for num_str in seq {
@@ -41,9 +32,10 @@ fn calculate_sum_of_seq(seq: Vec<String>) -> u32 {
     total
 }
 
+#[cfg(test)]
 pub fn print_day1_result() -> u32 {
     let mut seq: Vec<String> = vec![];
-    let lines = read_lines("./src/day1/input.txt").expect("Cannot read file");
+    let lines = crate::read_lines("./src/input.txt").expect("Cannot read file");
     extract_two_digit_seq_from_lines(lines, &mut seq);
     calculate_sum_of_seq(seq)
 }
