@@ -1,3 +1,5 @@
+pub mod part2;
+
 #[cfg(test)]
 pub(crate) fn print_valid_game_sum_day2() {
     use std::fs::read_to_string;
